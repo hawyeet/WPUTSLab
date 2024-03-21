@@ -9,20 +9,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle login form submission
     // Validate input and authenticate user
     // Assuming login validation logic here
+   // Database connection
+   $servername = "localhost";
+   $username = "root";
+   $password = "";
+   $db_name = "utswplab";
+   $conn = new mysqli($servername, $username, $password, $db_name);
+
+   if ($conn->connect_error) {
+       die("Connection failed: " . $conn->connect_error);
+   }
+
+    // Prepare and execute SQL query
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Connect to database
-    $mysqli = new mysqli("localhost", "username", "password", "customer_management");
-
-    // Check connection
-    if ($mysqli->connect_error) {
-        die("Connection failed: " . $mysqli->connect_error);
-    }
-
-    // Fetch user data based on username
-    $sql = "SELECT * FROM user WHERE username = '$username'";
-    $result = $mysqli->query($sql);
+    $sql = "SELECT * FROM user WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -40,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Invalid username or password";
     }
 
-    $mysqli->close();
+    $conn->close();
 }
 ?>
 <!DOCTYPE html>
