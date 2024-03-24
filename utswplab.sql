@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2024 at 04:51 PM
+-- Generation Time: Mar 24, 2024 at 08:54 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -44,7 +44,7 @@ CREATE TABLE `customer` (
 --
 
 CREATE TABLE `user` (
-  `user_id` int(5) NOT NULL,
+  `id` int(5) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -53,8 +53,9 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `username`, `password`) VALUES
-(0, 'root', '$2y$10$mDDKBuQcThW2y57FrJgV4.uofi/wNnPlh8PGaUstOg.lDxgWXnwq2');
+INSERT INTO `user` (`id`, `username`, `password`) VALUES
+(1, 'cokil', '$2y$10$30hu4PXq6pI890.PIEob5Od2vw4eJiz0TF34pFhAGXHs1Hv/aWGrC'),
+(2, 'opet', '$2y$10$HApmIsq4mnSgrq9EWIL.6.bjBgR1MhnC8AVjQtfWaTWz62ctAaK5O');
 
 --
 -- Indexes for dumped tables
@@ -71,7 +72,7 @@ ALTER TABLE `customer`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Constraints for dumped tables
@@ -81,7 +82,7 @@ ALTER TABLE `user`
 -- Constraints for table `customer`
 --
 ALTER TABLE `customer`
-  ADD CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+  ADD CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

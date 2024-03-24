@@ -1,39 +1,50 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id'])) {
+include("connect.php");
+
+// Redirect to login if user is not authenticated
+if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
-}
-
-// Connect to database
-$mysqli = new mysqli("localhost", "username", "password", "customer_management");
-
-// Check connection
-if ($mysqli->connect_error) {
-    die("Connection failed: " . $mysqli->connect_error);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle add customer form submission
     // Retrieve form data and insert into database
+
     // Assuming form handling logic here
     $customer_name = $_POST['customer_name'];
     $customer_company = $_POST['customer_company'];
     $customer_phone = $_POST['customer_phone'];
     $customer_email = $_POST['customer_email'];
 
-    $user_id = $_SESSION['user_id'];
+    // Get the username from session
+    $username = $_SESSION['username'];
 
-    $sql = "INSERT INTO customer (user_id, customer_name, customer_company, customer_phone, customer_email) VALUES ('$user_id', '$customer_name', '$customer_company', '$customer_phone', '$customer_email')";
-    if ($mysqli->query($sql) === TRUE) {
+    // Prepare SQL statement with placeholders
+    $sql = "INSERT INTO customer (user_id, customer_name, customer_company, customer_phone, customer_email) VALUES ((SELECT user_id FROM user WHERE username = ?), ?, ?, ?, ?)";
+    
+    // Prepare the statement
+    $stmt = $conn->prepare($sql);
+
+    // Bind parameters to the placeholders
+    $stmt->bind_param("sssss", $username, $customer_name, $customer_company, $customer_phone, $customer_email);
+
+    // Execute the statement
+    if ($stmt->execute()) {
         echo "Customer added successfully";
     } else {
-        echo "Error: " . $sql . "<br>" . $mysqli->error;
+        echo "Error: " . $stmt->error;
     }
+
+    // Close the statement
+    $stmt->close();
 }
 
-$mysqli->close();
+// Close the connection
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
