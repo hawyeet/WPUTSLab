@@ -6,7 +6,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 // Connect to database
-$mysqli = new mysqli("localhost", "username", "password", "customer_management");
+$mysqli = new mysqli("localhost", "root", "", "utswplab");
 
 // Check connection
 if ($mysqli->connect_error) {
@@ -23,9 +23,11 @@ $mysqli->close();
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>List Customers</title>
 </head>
+
 <body>
     <h2>List Customers</h2>
     <table border="1">
@@ -39,7 +41,7 @@ $mysqli->close();
         </tr>
         <?php
         if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
+            while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>" . $row['customer_name'] . "</td>";
                 echo "<td>" . $row['customer_company'] . "</td>";
@@ -55,4 +57,5 @@ $mysqli->close();
         ?>
     </table>
 </body>
+
 </html
