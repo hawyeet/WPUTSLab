@@ -26,6 +26,57 @@ $mysqli->close();
 
 <head>
     <title>List Customers</title>
+    <style>
+    body {
+        background-color: #1a1a1a;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    table {
+        width: 80%;
+        margin: 20px auto;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 1px solid #fff;
+        padding: 8px;
+        text-align: left;
+    }
+
+    tr:nth-child(even) {
+        background-color: #333;
+    }
+
+    th {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    a {
+        display: block;
+        width: fit-content;
+        margin: 20px auto;
+        text-align: center;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    a:hover {
+        background-color: #0056b3;
+    }
+    </style>
 </head>
 
 <body>
@@ -48,7 +99,7 @@ $mysqli->close();
                 echo "<td>" . $row['customer_phone'] . "</td>";
                 echo "<td>" . $row['customer_email'] . "</td>";
                 echo "<td>" . $row['customer_stat'] . "</td>";
-                echo "<td><a href='delete_customer.php?customer_id=" . $row['customer_id'] . "'>Delete</a> | <a href='edit_customer.php?customer_id=" . $row['customer_id'] . "'>Edit</a></td>";
+                echo "<td><a href='delete_customer.php?customer_id=" . $row['customer_id'] . "'>Delete</a><a href='edit_customer.php?customer_id=" . $row['customer_id'] . "'>Edit</a></td>";
                 echo "</tr>";
             }
         } else {
@@ -56,6 +107,7 @@ $mysqli->close();
         }
         ?>
     </table>
+    <a href="index.php">Back to Index</a>
 </body>
 
-</html
+</html>
