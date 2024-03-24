@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2024 at 04:51 PM
+-- Generation Time: Mar 24, 2024 at 10:55 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -54,7 +54,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `username`, `password`) VALUES
-(0, 'root', '$2y$10$mDDKBuQcThW2y57FrJgV4.uofi/wNnPlh8PGaUstOg.lDxgWXnwq2');
+(1, 'cokil', '$2y$10$30hu4PXq6pI890.PIEob5Od2vw4eJiz0TF34pFhAGXHs1Hv/aWGrC'),
+(2, 'opet', '$2y$10$HApmIsq4mnSgrq9EWIL.6.bjBgR1MhnC8AVjQtfWaTWz62ctAaK5O'),
+(3, 'habib', '$2y$10$5WjJ9HnGAjxdolRRM4uAxOIGBidpSMHxcMZHkxD/O3GaG5qaOFLt.');
 
 --
 -- Indexes for dumped tables

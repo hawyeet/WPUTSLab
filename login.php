@@ -1,66 +1,68 @@
 <?php
+include("connect.php");
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
-if (isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit();
-}
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle login form submission
-    // Validate input and authenticate user
-    // Assuming login validation logic here
-   // Database connection
-   $servername = "localhost";
-   $username = "root";
-   $password = "";
-   $db_name = "utswplab";
-   $conn = new mysqli($servername, $username, $password, $db_name);
-
-   if ($conn->connect_error) {
-       die("Connection failed: " . $conn->connect_error);
-   }
-
-    // Prepare and execute SQL query
+if(isset($_POST['submit'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM user WHERE username = ?";
-    $stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare("SELECT * FROM user WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        // Verify password hash
+    $row = $result->fetch_assoc();
+    $count = $result->num_rows;
+
+    $stmt->close();
+
+    if($count == 1){
         if (password_verify($password, $row['password'])) {
-            // Password is correct, set session variables
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['username'] = $row['username'];
+
             header("Location: index.php");
-            exit();
-        } else {
-            echo "Invalid username or password";
+            exit;
+        } 
+        else {
+            echo '<script>
+                alert("Login failed. Incorrect password.");
+                window.location.href = "login.php";
+            </script>';
+            exit;
         }
     } else {
-        echo "Invalid username or password";
+        echo '<script>
+            alert("Login failed. User not found.");
+            window.location.href = "login.php";
+        </script>';
+        exit;
     }
-
-    $conn->close();
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" type="text/css" href="resource/css/style.css">
 </head>
 <body>
-    <h2>Login</h2>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        Username: <input type="text" name="username" required><br><br>
-        Password: <input type="password" name="password" required><br><br>
-        <input type="submit" value="Login">
+<div class="login-container">
+    <h2>Login Form</h2>
+    <form name="form" action="login.php" method="post" enctype="multipart/form-data">
+        <label for="username">Username:</label>
+        <input type="text" id="user" name="username" required></br></br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="pass" name="password" required></br></br>
+
+        <input type="submit" id="btn" value="Login" name="submit">
     </form>
-    <p>Don't have an account? <a href="register.php">Register here</a></p>
+</div>
 </body>
 </html>

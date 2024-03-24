@@ -1,63 +1,80 @@
 <?php
-session_start();
-if (isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit();
-}
+include("connect.php");
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve form data
+if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Hash the password
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Database connection
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $db_name = "utswplab";
-    $conn = new mysqli($servername, $username, $password, $db_name);
+            // Hash the password
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+            // Check if the username already exists
+            $checkQuery = $conn->prepare("SELECT COUNT(*) as count FROM user WHERE username = ?");
+            $checkQuery->bind_param("s", $username);
+            $checkQuery->execute();
+            $result = $checkQuery->get_result();
+            $row = $result->fetch_assoc();
 
-    // Prepare and execute SQL query
-    $check_username_sql = "SELECT * FROM user WHERE username = '$username'";
-    $check_username_result = $conn->query($check_username_sql);
-
-    if ($check_username_result === FALSE) {
-        echo "Error: " . $conn->error;
-    } else {
-        if ($check_username_result->num_rows > 0) {
-            echo "Username already exists";
-        } else {
-            $insert_user_sql = "INSERT INTO user (username, password) VALUES ('$username', '$hashed_password')";
-            if ($conn->query($insert_user_sql) === TRUE) {
-                echo "Registration successful";
-            } else {
-                echo "Error: " . $insert_user_sql . "<br>" . $conn->error;
+            if ($row['count'] > 0) {
+                // Username already exists
+                echo '<script>
+                    alert("Username already exists. Please choose a different username.");
+                    window.location.href = "register.php";
+                </script>';
+                exit;
             }
-        }
-    }
 
-    $conn->close();
-}
+            // Fetch the number of entries in the user table
+            $countResult = $conn->query("SELECT COUNT(*) as count FROM user");
+            $countRow = $countResult->fetch_assoc();
+            $count = $countRow['count'];
+
+            // Assign an ID (assuming the ID is an integer with a maximum length of 4)
+            $newId = ($count < 9999) ? $count + 1 : 1;
+
+            // Use prepared statement to prevent SQL injection
+            $userInsertStmt = $conn->prepare("INSERT INTO user (user_id, username, password) VALUES (?, ?, ?)");
+            $userInsertStmt->bind_param("iss", $newId, $username, $hashedPassword); // Store hashed password
+
+            // Execute the user insertion statement
+            $userInsertStmt->execute();
+
+            $userInsertStmt->close();
+        
+            echo "Registration successful! Your ID is: " . sprintf('%04d', $newId);
+            
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+            
+        }
+
 ?>
+
+
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" type="text/css" href="resource/css/style.css">
 </head>
 <body>
-    <h2>Register</h2>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        Username: <input type="text" name="username" required><br><br>
-        Password: <input type="password" name="password" required><br><br>
-        <input type="submit" value="Register">
+
+<div class="login-container">
+    <h2>Registration Form</h2>
+    <form name="form" action="register.php" method="post" enctype="multipart/form-data">
+        <label for="username">Username:</label>
+        <input type="text" id="user" name="username" required></br></br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="pass" name="password" required></br></br>
+
+        <input type="submit" id="btn" value="Register" name="submit">
     </form>
-    <p>Already have an account? <a href="login.php">Login here</a></p>
+</div>
 </body>
 </html>
