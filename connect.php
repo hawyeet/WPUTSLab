@@ -8,6 +8,3 @@ $conn = new mysqli($servername, $username, $password, $db_name);
 if ($conn->connect_error) {
     die("code 0 : " . $conn->connect_error);
 }
-else{
-    echo "code 1";
-}
