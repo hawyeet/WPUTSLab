@@ -1,3 +1,40 @@
+<?php
+$servername = "localhost";
+$password = "";
+$db_name = "utswplab";
+$conn = new mysqli($servername, $username, $password, $db_name);
+
+if ($conn->connect_error) {
+    die("code 0 : " . $conn->connect_error);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $customer_name = $_POST['customer_name'];
+    $customer_company = $_POST['customer_company'];
+    $customer_phone = $_POST['customer_phone'];
+    $customer_email = $_POST['customer_email'];
+
+    // Prepare and bind the SQL statement
+    $stmt = $conn->prepare("INSERT INTO customer (user_id, customer_name, customer_company, customer_stat, customer_phone, customer_email) VALUES (?, ?, ?, 'normal', ?, ?)");
+    $stmt->bind_param("issss", $user_id, $customer_name, $customer_company, $customer_phone, $customer_email);
+
+    // Set the user_id for the customer
+    $user_id = 1; // You need to set the appropriate user_id here
+
+    // Execute the statement
+    if ($stmt->execute()) {
+        echo "<div class='success-message'>Customer added successfully</div>";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    // Close statement
+    $stmt->close();
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -84,11 +121,6 @@
         Customer Email: <input type="email" name="customer_email" required><br><br>
         <input type="submit" value="Add Customer">
     </form>
-    <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        echo "<div class='success-message'>Customer added successfully</div>";
-    }
-    ?>
     <a href="index.php">Back to Index</a>
 </body>
 

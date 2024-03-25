@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 24, 2024 at 10:55 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: localhost:3306
+-- Generation Time: Mar 25, 2024 at 11:14 AM
+-- Server version: 11.2.2-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -54,8 +54,6 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `username`, `password`) VALUES
-(1, 'cokil', '$2y$10$30hu4PXq6pI890.PIEob5Od2vw4eJiz0TF34pFhAGXHs1Hv/aWGrC'),
-(2, 'opet', '$2y$10$HApmIsq4mnSgrq9EWIL.6.bjBgR1MhnC8AVjQtfWaTWz62ctAaK5O'),
 (3, 'habib', '$2y$10$5WjJ9HnGAjxdolRRM4uAxOIGBidpSMHxcMZHkxD/O3GaG5qaOFLt.');
 
 --
@@ -74,6 +72,16 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+  MODIFY `customer_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
