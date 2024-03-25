@@ -50,69 +50,69 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
     <style>
-    body {
-        background-color: #1a1a1a;
-        color: #fff;
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-    .login-container {
-        background-color: #333;
-        padding: 20px;
-        border-radius: 10px;
-        width: 300px;
-        margin: 100px auto;
-    }
+        .login-container {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            margin: 100px auto;
+        }
 
-    .login-container h2 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    .login-container form {
-        display: flex;
-        flex-direction: column;
-    }
+        .login-container form {
+            display: flex;
+            flex-direction: column;
+        }
 
-    .login-container label {
-        margin-bottom: 10px;
-    }
+        .login-container label {
+            margin-bottom: 10px;
+        }
 
-    .login-container input[type="text"],
-    .login-container input[type="password"] {
-        padding: 10px;
-        margin-bottom: 20px;
-        border: none;
-        border-radius: 5px;
-        background-color: #555;
-        color: #fff;
-        outline: none;
-    }
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #555;
+            color: #fff;
+            outline: none;
+        }
 
-    .login-container input[type="submit"] {
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        background-color: #007bff;
-        color: #fff;
-        cursor: pointer;
-        outline: none;
-    }
+        .login-container input[type="submit"] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            outline: none;
+        }
 
-    .login-container input[type="submit"]:hover {
-        background-color: #0056b3;
-    }
+        .login-container input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
 
-    .login-container a {
-        color: #fff;
-        text-decoration: none;
-        text-align: center;
-        display: block;
-        margin-top: 10px;
-        /* Added margin top */
-    }
+        .login-container a {
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+            margin-top: 10px;
+            /* Added margin top */
+        }
     </style>
 </head>
 

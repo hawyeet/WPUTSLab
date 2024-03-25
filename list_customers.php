@@ -5,8 +5,11 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-// Connect to database
-$mysqli = new mysqli("localhost", "root", "", "utswplab");
+$servername = "localhost";
+$username = "id22006574_admin";
+$password = "@Admin001";
+$db_name = "id22006574_utswplab";
+$conn = new mysqli($servername, $username, $password, $db_name);
 
 // Check connection
 if ($mysqli->connect_error) {
@@ -27,55 +30,55 @@ $mysqli->close();
 <head>
     <title>List Customers</title>
     <style>
-    body {
-        background-color: #1a1a1a;
-        color: #fff;
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-    h2 {
-        text-align: center;
-    }
+        h2 {
+            text-align: center;
+        }
 
-    table {
-        width: 80%;
-        margin: 20px auto;
-        border-collapse: collapse;
-    }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
 
-    th,
-    td {
-        border: 1px solid #fff;
-        padding: 8px;
-        text-align: left;
-    }
+        th,
+        td {
+            border: 1px solid #fff;
+            padding: 8px;
+            text-align: left;
+        }
 
-    tr:nth-child(even) {
-        background-color: #333;
-    }
+        tr:nth-child(even) {
+            background-color: #333;
+        }
 
-    th {
-        background-color: #007bff;
-        color: #fff;
-    }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
 
-    a {
-        display: block;
-        width: fit-content;
-        margin: 20px auto;
-        text-align: center;
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 5px;
-    }
+        a {
+            display: block;
+            width: fit-content;
+            margin: 20px auto;
+            text-align: center;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
 
-    a:hover {
-        background-color: #0056b3;
-    }
+        a:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 
