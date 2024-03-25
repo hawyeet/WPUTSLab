@@ -14,18 +14,22 @@ if (!isset($_GET['customer_id']) || empty($_GET['customer_id'])) {
 $customer_id = $_GET['customer_id'];
 
 // Connect to database
-$mysqli = new mysqli("localhost", "root", "", "utswplab");
-
+$servername = "localhost";
+$username = "id22006574_admin";
+$password = "@Admin001";
+$db_name = "id22006574_utswplab";
+// Create connection
+$conn = new mysqli($servername, $username, $password, $db_name);
 // Check connection
-if ($mysqli->connect_error) {
-    die("Connection failed: " . $mysqli->connect_error);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
 $user_id = $_SESSION['user_id'];
 
 // Retrieve customer data
 $sql = "SELECT * FROM customer WHERE user_id = '$user_id' AND customer_id = '$customer_id'";
-$result = $mysqli->query($sql);
+$result = $conn->query($sql);
 
 if ($result->num_rows == 1) {
     $row = $result->fetch_assoc();
@@ -51,15 +55,15 @@ if (isset($_POST['submit'])) {
                     customer_stat = '$customer_stat'
                     WHERE customer_id = '$customer_id' AND user_id = '$user_id'";
 
-    if ($mysqli->query($update_sql) === TRUE) {
+    if ($conn->query($update_sql) === TRUE) {
         header("Location: list_customers.php");
         exit();
     } else {
-        echo "Error updating record: " . $mysqli->error;
+        echo "Error updating record: " . $conn->error;
     }
 }
 
-$mysqli->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -68,74 +72,74 @@ $mysqli->close();
 <head>
     <title>Edit Customer</title>
     <style>
-        body {
-            background-color: #1a1a1a;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+    body {
+        background-color: #1a1a1a;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 
-        h2 {
-            text-align: center;
-        }
+    h2 {
+        text-align: center;
+    }
 
-        form {
-            width: 60%;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #333;
-            border-radius: 10px;
-        }
+    form {
+        width: 60%;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #333;
+        border-radius: 10px;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
 
-        input[type="text"],
-        input[type="email"],
-        select {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #555;
-            color: #fff;
-            outline: none;
-        }
+    input[type="text"],
+    input[type="email"],
+    select {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #555;
+        color: #fff;
+        outline: none;
+    }
 
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: #fff;
-            cursor: pointer;
-            outline: none;
-        }
+    input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        outline: none;
+    }
 
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
 
-        a {
-            display: block;
-            width: fit-content;
-            margin: 20px auto;
-            text-align: center;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
+    a {
+        display: block;
+        width: fit-content;
+        margin: 20px auto;
+        text-align: center;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+    }
 
-        a:hover {
-            background-color: #0056b3;
-        }
+    a:hover {
+        background-color: #0056b3;
+    }
     </style>
 </head>
 
@@ -143,16 +147,20 @@ $mysqli->close();
     <h2>Edit Customer</h2>
     <form method="POST">
         <label for="customer_name">Customer Name</label><br>
-        <input type="text" id="customer_name" name="customer_name" value="<?php echo $row['customer_name']; ?>" required><br><br>
+        <input type="text" id="customer_name" name="customer_name" value="<?php echo $row['customer_name']; ?>"
+            required><br><br>
 
         <label for="customer_company">Customer Company</label><br>
-        <input type="text" id="customer_company" name="customer_company" value="<?php echo $row['customer_company']; ?>" required><br><br>
+        <input type="text" id="customer_company" name="customer_company" value="<?php echo $row['customer_company']; ?>"
+            required><br><br>
 
         <label for="customer_phone">Customer Phone</label><br>
-        <input type="text" id="customer_phone" name="customer_phone" value="<?php echo $row['customer_phone']; ?>" required><br><br>
+        <input type="text" id="customer_phone" name="customer_phone" value="<?php echo $row['customer_phone']; ?>"
+            required><br><br>
 
         <label for="customer_email">Customer Email</label><br>
-        <input type="email" id="customer_email" name="customer_email" value="<?php echo $row['customer_email']; ?>" required><br><br>
+        <input type="email" id="customer_email" name="customer_email" value="<?php echo $row['customer_email']; ?>"
+            required><br><br>
 
         <label for="customer_stat">Customer Status</label><br>
         <select id="customer_stat" name="customer_stat">

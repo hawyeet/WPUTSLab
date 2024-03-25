@@ -12,17 +12,16 @@ $db_name = "id22006574_utswplab";
 $conn = new mysqli($servername, $username, $password, $db_name);
 
 // Check connection
-if ($mysqli->connect_error) {
-    die("Connection failed: " . $mysqli->connect_error);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
 $user_id = $_SESSION['user_id'];
 
 // Retrieve customer data
 $sql = "SELECT * FROM customer WHERE user_id = '$user_id' ORDER BY FIELD(customer_stat, 'favourite') DESC";
-$result = $mysqli->query($sql);
+$result = $conn->query($sql);
 
-$mysqli->close();
 ?>
 <!DOCTYPE html>
 <html>
@@ -114,3 +113,7 @@ $mysqli->close();
 </body>
 
 </html>
+<?php
+// Close connection
+$conn->close();
+?>
