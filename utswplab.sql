@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Mar 25, 2024 at 11:14 AM
--- Server version: 11.2.2-MariaDB
--- PHP Version: 8.0.28
+-- Host: 127.0.0.1
+-- Generation Time: Mar 25, 2024 at 12:59 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -50,13 +50,6 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`user_id`, `username`, `password`) VALUES
-(3, 'habib', '$2y$10$5WjJ9HnGAjxdolRRM4uAxOIGBidpSMHxcMZHkxD/O3GaG5qaOFLt.');
-
---
 -- Indexes for dumped tables
 --
 
@@ -81,7 +74,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customer_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `customer_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
